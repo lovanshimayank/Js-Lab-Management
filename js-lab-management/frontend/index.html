@@ -1,0 +1,1284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JS Lab Management System</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Top Navigation Bar -->
+  <header>
+    <div class="nav-container">
+      <div class="brand">
+        <span class="brand-icon">JS</span>
+        <span class="brand-title">JS Lab Management System</span>
+      </div>
+      <ul class="nav-links">
+        <li><button class="nav-btn active" data-tab="dashboard">📊 Dashboard</button></li>
+        <li><button class="nav-btn" data-tab="students">👨‍🎓 Students</button></li>
+        <li><button class="nav-btn" data-tab="experiments">🔬 Experiments</button></li>
+        <li><button class="nav-btn" data-tab="concepts">⚡ JavaScript Concepts</button></li>
+        <li><button class="nav-btn" data-tab="about">ℹ️ About</button></li>
+      </ul>
+    </div>
+    <!-- Live Database Status Bar -->
+    <div class="status-bar">
+      <span>JavaScript Laboratory Course Full-Stack Project</span>
+      <span class="status-badge">
+        <span id="db-status-dot" class="dot dot-green"></span>
+        <span id="db-status-indicator">Connecting to Backend...</span>
+      </span>
+    </div>
+  </header>
+
+  <!-- Main Content Areas -->
+  <main>
+
+    <!-- ========================================== -->
+    <!-- 1. DASHBOARD TAB                           -->
+    <!-- ========================================== -->
+    <section id="tab-dashboard" class="tab-pane active">
+      <div class="section-header">
+        <div>
+          <h2>Laboratory Overview</h2>
+          <p>Real-time statistics and syllabus concept coverage.</p>
+        </div>
+      </div>
+
+      <!-- Quick Statistics Cards -->
+      <div class="stats-grid">
+        <div class="stat-card card-blue">
+          <div class="stat-icon">👨‍🎓</div>
+          <div class="stat-info">
+            <h3 id="stat-total-students">0</h3>
+            <p>Total Students</p>
+          </div>
+        </div>
+        <div class="stat-card card-purple">
+          <div class="stat-icon">🔬</div>
+          <div class="stat-info">
+            <h3 id="stat-total-experiments">0</h3>
+            <p>Total Experiments</p>
+          </div>
+        </div>
+        <div class="stat-card card-green">
+          <div class="stat-icon">✅</div>
+          <div class="stat-info">
+            <h3 id="stat-completed-experiments">0</h3>
+            <p>Completed Experiments</p>
+          </div>
+        </div>
+        <div class="stat-card card-amber">
+          <div class="stat-icon">⏳</div>
+          <div class="stat-info">
+            <h3 id="stat-pending-experiments">0</h3>
+            <p>Pending Experiments</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Syllabus Concepts Covered Section -->
+      <div class="card">
+        <div class="card-title">
+          <span>JavaScript Concepts Covered</span>
+          <span style="font-size: 0.85rem; color: var(--text-muted);">Click any card to open interactive demonstration</span>
+        </div>
+        <div class="concepts-overview-grid">
+          <div class="concept-badge-card" data-target-sub="syntax">
+            <div style="font-size: 1.5rem;">📦</div>
+            <h4>Variables & Scope</h4>
+          </div>
+          <div class="concept-badge-card" data-target-sub="datatypes">
+            <div style="font-size: 1.5rem;">🏷️</div>
+            <h4>Data Types</h4>
+          </div>
+          <div class="concept-badge-card" data-target-sub="operators">
+            <div style="font-size: 1.5rem;">➕</div>
+            <h4>Operators</h4>
+          </div>
+          <div class="concept-badge-card" data-target-sub="control">
+            <div style="font-size: 1.5rem;">🔀</div>
+            <h4>Conditions</h4>
+          </div>
+          <div class="concept-badge-card" data-target-sub="control">
+            <div style="font-size: 1.5rem;">🔁</div>
+            <h4>Loops</h4>
+          </div>
+          <div class="concept-badge-card" data-target-sub="strings-arrays">
+            <div style="font-size: 1.5rem;">🔤</div>
+            <h4>Strings</h4>
+          </div>
+          <div class="concept-badge-card" data-target-sub="strings-arrays">
+            <div style="font-size: 1.5rem;">📚</div>
+            <h4>Arrays</h4>
+          </div>
+          <div class="concept-badge-card" data-target-sub="functions">
+            <div style="font-size: 1.5rem;">⚙️</div>
+            <h4>Functions</h4>
+          </div>
+          <div class="concept-badge-card" data-target-sub="functions">
+            <div style="font-size: 1.5rem;">🔒</div>
+            <h4>Closures</h4>
+          </div>
+          <div class="concept-badge-card" data-target-sub="functions">
+            <div style="font-size: 1.5rem;">🔍</div>
+            <h4>Regular Expressions</h4>
+          </div>
+          <div class="concept-badge-card" data-target-sub="control">
+            <div style="font-size: 1.5rem;">🛡️</div>
+            <h4>Error Handling</h4>
+          </div>
+          <div class="concept-badge-card" data-target-sub="numbers-date">
+            <div style="font-size: 1.5rem;">📅</div>
+            <h4>Date & Math</h4>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- 2. STUDENTS TAB                            -->
+    <!-- ========================================== -->
+    <section id="tab-students" class="tab-pane">
+      <div class="section-header">
+        <div>
+          <h2>Student Management</h2>
+          <p>Register, view, search, and manage laboratory students via REST APIs.</p>
+        </div>
+      </div>
+
+      <div class="content-split">
+        <!-- Add Student Form -->
+        <div class="card">
+          <h3 class="card-title">Add New Student</h3>
+          <form id="student-form">
+            <div class="form-group">
+              <label for="student-id-input">Student ID / Roll No</label>
+              <input type="text" id="student-id-input" class="form-control" placeholder="e.g. JS-2026-004" required>
+            </div>
+            <div class="form-group">
+              <label for="student-name-input">Full Name</label>
+              <input type="text" id="student-name-input" class="form-control" placeholder="e.g. Priya Singh" required>
+            </div>
+            <div class="form-group">
+              <label for="student-email-input">Email Address</label>
+              <input type="email" id="student-email-input" class="form-control" placeholder="e.g. priya@example.edu" required>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="student-course-input">Course</label>
+                <select id="student-course-input" class="form-control" required>
+                  <option value="">Select Course</option>
+                  <option value="B.Tech CSE">B.Tech CSE</option>
+                  <option value="B.Tech IT">B.Tech IT</option>
+                  <option value="BCA">BCA</option>
+                  <option value="MCA">MCA</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="student-semester-input">Semester</label>
+                <select id="student-semester-input" class="form-control" required>
+                  <option value="">Select Sem</option>
+                  <option value="Semester 1">Semester 1</option>
+                  <option value="Semester 2">Semester 2</option>
+                  <option value="Semester 3">Semester 3</option>
+                  <option value="Semester 4">Semester 4</option>
+                  <option value="Semester 5">Semester 5</option>
+                  <option value="Semester 6">Semester 6</option>
+                </select>
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">➕ Register Student</button>
+          </form>
+        </div>
+
+        <!-- Students List Table -->
+        <div class="card">
+          <div class="card-title">
+            <span>Enrolled Students</span>
+            <span style="font-size: 0.85rem; color: var(--text-muted);">Stored in MySQL (students table)</span>
+          </div>
+
+          <div class="toolbar">
+            <input type="text" id="student-search" class="form-control" placeholder="🔍 Search students by name, ID, or course...">
+          </div>
+
+          <div class="table-responsive">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Student ID</th>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Course</th>
+                  <th>Semester</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="students-table-body">
+                <!-- Dynamically loaded via fetch() -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- 3. EXPERIMENTS TAB                         -->
+    <!-- ========================================== -->
+    <section id="tab-experiments" class="tab-pane">
+      <div class="section-header">
+        <div>
+          <h2>Experiments Management</h2>
+          <p>Track syllabus lab assignments, toggle completion status, and filter assignments.</p>
+        </div>
+      </div>
+
+      <div class="content-split">
+        <!-- Add Experiment Form -->
+        <div class="card">
+          <h3 class="card-title">Add Laboratory Experiment</h3>
+          <form id="experiment-form">
+            <div class="form-group">
+              <label for="exp-name-input">Experiment Title</label>
+              <input type="text" id="exp-name-input" class="form-control" placeholder="e.g. Asynchronous Fetch API Demo" required>
+            </div>
+            <div class="form-group">
+              <label for="exp-module-input">Syllabus Module</label>
+              <select id="exp-module-input" class="form-control" required>
+                <option value="">Select Syllabus Module</option>
+                <option value="Module 1 - Basics">Module 1 - Basics</option>
+                <option value="Module 2 - Data & Ops">Module 2 - Data & Ops</option>
+                <option value="Module 3 - Control Flow">Module 3 - Control Flow</option>
+                <option value="Module 4 - Standard Objects">Module 4 - Standard Objects</option>
+                <option value="Module 5 - Advanced Functions">Module 5 - Advanced Functions</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="exp-desc-input">Description / Objectives</label>
+              <textarea id="exp-desc-input" class="form-control" rows="3" placeholder="Brief explanation of the practical goal..."></textarea>
+            </div>
+            <div class="form-group">
+              <label for="exp-status-input">Status</label>
+              <select id="exp-status-input" class="form-control">
+                <option value="Pending">Pending</option>
+                <option value="Completed">Completed</option>
+              </select>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">➕ Create Experiment</button>
+          </form>
+        </div>
+
+        <!-- Experiments Table -->
+        <div class="card">
+          <div class="card-title">
+            <span>Laboratory Practical Experiments</span>
+            <span style="font-size: 0.85rem; color: var(--text-muted);">Stored in MySQL (experiments table)</span>
+          </div>
+
+          <div class="toolbar">
+            <input type="text" id="experiment-search" class="form-control" placeholder="🔍 Search experiments...">
+            <select id="experiment-status-filter" class="form-control" style="max-width: 160px;">
+              <option value="">All Statuses</option>
+              <option value="Pending">Pending</option>
+              <option value="Completed">Completed</option>
+            </select>
+          </div>
+
+          <div class="table-responsive">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Experiment Name</th>
+                  <th>Module</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="experiments-table-body">
+                <!-- Dynamically loaded via fetch() -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- 4. JAVASCRIPT CONCEPTS LAB TAB             -->
+    <!-- ========================================== -->
+    <section id="tab-concepts" class="tab-pane">
+      <div class="section-header">
+        <div>
+          <h2>JavaScript Concepts Lab</h2>
+          <p>Interactive laboratory testing ground executing real browser JavaScript across the entire syllabus.</p>
+        </div>
+      </div>
+
+      <!-- Concepts Sub Navigation -->
+      <div class="sub-nav">
+        <button class="sub-nav-btn active" data-sub="syntax">1. Syntax & Variables</button>
+        <button class="sub-nav-btn" data-sub="history">2. ECMAScript Timeline</button>
+        <button class="sub-nav-btn" data-sub="datatypes">3. Data Types & Casts</button>
+        <button class="sub-nav-btn" data-sub="operators">4. Operators Calculator</button>
+        <button class="sub-nav-btn" data-sub="control">5. Control, Loops & Errors</button>
+        <button class="sub-nav-btn" data-sub="numbers-date">6. Numbers, Math & Date</button>
+        <button class="sub-nav-btn" data-sub="strings-arrays">7. Strings & Arrays</button>
+        <button class="sub-nav-btn" data-sub="functions">8. Functions, Closures & Regex</button>
+      </div>
+
+      <!-- SUB-SECTION 1: Syntax & Variables -->
+      <div id="concept-syntax" class="concept-section active">
+        <!-- Syntax Card -->
+        <div class="lab-card">
+          <div class="lab-card-header">
+            <h3>📝 JavaScript Syntax (Statements, Semicolons & Expressions)</h3>
+            <p>Statements represent actions ending with semicolons; expressions calculate and return a value.</p>
+          </div>
+          <div class="lab-card-body">
+            <div class="interactive-box">
+              <button class="btn btn-primary" onclick="ConceptsLab.runSyntaxDemo()">▶ Run Syntax Demonstration</button>
+              <div class="output-label">Execution Output:</div>
+              <pre id="out-syntax" class="output-box">// Click 'Run' to execute real JavaScript syntax</pre>
+            </div>
+            <div class="code-box">
+              <div class="code-header">Example Code</div>
+              <code>
+// Statement with identifier and string literal<br>
+let greeting = "Hello, JavaScript Student!";<br><br>
+// Expression: evaluated to a value<br>
+let count = 5 + 3;<br><br>
+console.log(greeting);
+              </code>
+            </div>
+          </div>
+        </div>
+
+        <!-- Variables (var, let, const) Card -->
+        <div class="lab-card">
+          <div class="lab-card-header">
+            <h3>📦 Variables: var vs let vs const</h3>
+            <p>Compare variable declaration, mutability, and scoping behavior in JavaScript.</p>
+          </div>
+          <div class="lab-card-body">
+            <div class="interactive-box">
+              <div class="form-group">
+                <label>Select Variable Type:</label>
+                <select id="var-select" class="form-control">
+                  <option value="var">var (Function scoped, can re-declare & re-assign)</option>
+                  <option value="let">let (Block scoped, can re-assign, no re-declaration)</option>
+                  <option value="const">const (Block scoped, immutable binding)</option>
+                </select>
+              </div>
+              <button class="btn btn-primary" onclick="ConceptsLab.runVariableDemo()">▶ Test Variable Behavior</button>
+              <div class="output-label">Execution Output:</div>
+              <pre id="out-variable" class="output-box">// Output will appear here</pre>
+            </div>
+            <div class="code-box">
+              <div class="code-header">Summary Rules</div>
+              <code>
+var x = 10; var x = 20; // OK (Legacy)<br>
+let y = 10; y = 20;     // OK (Re-assign)<br>
+const z = 10; z = 20;   // TypeError!<br><br>
+Use 'const' by default, 'let' when values change, avoid 'var' in modern JS.
+              </code>
+            </div>
+          </div>
+        </div>
+
+        <!-- Variable Scope Demo -->
+        <div class="lab-card">
+          <div class="lab-card-header">
+            <h3>🌐 Variable Scope (Global, Function & Block Scope)</h3>
+            <p>Demonstrates lexical visibility and how block scoping isolates variables created with let/const.</p>
+          </div>
+          <div class="lab-card-body">
+            <div class="interactive-box">
+              <button class="btn btn-primary" onclick="ConceptsLab.runScopeDemo()">▶ Test Scope Visibility</button>
+              <div class="output-label">Execution Output:</div>
+              <pre id="out-scope" class="output-box">// Scope traces will display here</pre>
+            </div>
+            <div class="code-box">
+              <div class="code-header">Scope Concept</div>
+              <code>
+const globalVar = "Global";<br>
+function demo() {<br>
+&nbsp;&nbsp;const funcVar = "Function Scope";<br>
+&nbsp;&nbsp;if (true) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;let blockVar = "Block Scope";<br>
+&nbsp;&nbsp;}<br>
+}
+              </code>
+            </div>
+          </div>
+        </div>
+
+        <!-- Keywords & Hoisting -->
+        <div class="lab-card">
+          <div class="lab-card-header">
+            <h3>📑 Reserved Keywords & Hoisting</h3>
+            <p>Understand language reserved words and how JavaScript hoists declarations to the top of their scope.</p>
+          </div>
+          <div class="lab-card-body">
+            <div class="interactive-box">
+              <button class="btn btn-primary" onclick="ConceptsLab.runHoistingDemo()">▶ Test Hoisting & TDZ</button>
+              <div class="output-label">Execution Output:</div>
+              <pre id="out-hoisting" class="output-box">// Click to test hoisting</pre>
+            </div>
+            <div class="code-box">
+              <div class="code-header">Reserved Words List</div>
+              <code style="display: block; font-size: 0.8rem; line-height: 1.6;">
+var, let, const, if, else, for, while, function, return, class, new, try, catch, throw, switch, case, break, continue.<br><br>
+<em>Note: Reserved keywords cannot be used as identifier names (variable names or function names).</em>
+              </code>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SUB-SECTION 2: ECMAScript History -->
+      <div id="concept-history" class="concept-section">
+        <div class="lab-card">
+          <div class="lab-card-header">
+            <h3>📜 JavaScript vs ECMAScript & Evolution Timeline</h3>
+            <p><strong>JavaScript</strong> is the language implementation; <strong>ECMAScript</strong> is the formal ECMA-262 specification.</p>
+          </div>
+          <div class="lab-card-body" style="grid-template-columns: 1fr;">
+            <!-- ES5 vs ES6 Highlights -->
+            <div class="card" style="margin-bottom: 1rem;">
+              <h4 style="margin-bottom: 0.5rem;">⚡ ES5 (2009) vs ES6+ (2015+) Quick Comparison</h4>
+              <div class="table-responsive">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Feature</th>
+                      <th>ES5 (2009)</th>
+                      <th>ES6+ (2015 - 2025)</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Variable Declaration</td>
+                      <td><code>var</code> only (function scope)</td>
+                      <td><code>let</code>, <code>const</code> (block scope)</td>
+                    </tr>
+                    <tr>
+                      <td>Functions</td>
+                      <td><code>function foo() {}</code></td>
+                      <td>Arrow functions: <code>(a, b) => a + b</code></td>
+                    </tr>
+                    <tr>
+                      <td>String Concatenation</td>
+                      <td><code>"Hello " + name</code></td>
+                      <td>Template literals: <code>`Hello ${name}`</code></td>
+                    </tr>
+                    <tr>
+                      <td>Asynchronous Code</td>
+                      <td>Callbacks only</td>
+                      <td>Promises, <code>async / await</code></td>
+                    </tr>
+                    <tr>
+                      <td>Classes & Modules</td>
+                      <td>Prototypes, IIFE</td>
+                      <td><code>class</code>, <code>import / export</code></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Timeline -->
+            <h4 style="margin-top: 1rem;">🗓️ Interactive ECMAScript Evolution Timeline (1995 – 2025)</h4>
+            <div class="timeline">
+              <div class="timeline-item">
+                <div class="timeline-year">1995</div>
+                <div class="timeline-title">Brendan Eich creates JavaScript at Netscape</div>
+                <div class="timeline-desc">Created in 10 days as Mocha, later LiveScript, officially named JavaScript.</div>
+              </div>
+              <div class="timeline-item">
+                <div class="timeline-year">1997 - ECMAScript 1</div>
+                <div class="timeline-title">First Standardized Specification</div>
+                <div class="timeline-desc">Standardized under ECMA International as ECMA-262.</div>
+              </div>
+              <div class="timeline-item">
+                <div class="timeline-year">1999 - ES3</div>
+                <div class="timeline-title">Core Foundation</div>
+                <div class="timeline-desc">Added regular expressions, try/catch exception handling, and do-while loops.</div>
+              </div>
+              <div class="timeline-item">
+                <div class="timeline-year">2009 - ES5</div>
+                <div class="timeline-title">Strict Mode & JSON</div>
+                <div class="timeline-desc">Added "use strict", native JSON support, and array methods (map, filter, forEach, reduce).</div>
+              </div>
+              <div class="timeline-item">
+                <div class="timeline-year">2015 - ES6 / ES2015</div>
+                <div class="timeline-title">The Modern Revolution</div>
+                <div class="timeline-desc">Introduced let, const, arrow functions, classes, template literals, and native Promises.</div>
+              </div>
+              <div class="timeline-item">
+                <div class="timeline-year">2016 - ES2016</div>
+                <div class="timeline-title">Exponentiation & Array.includes</div>
+                <div class="timeline-desc">Added the ** exponentiation operator and Array.prototype.includes().</div>
+              </div>
+              <div class="timeline-item">
+                <div class="timeline-year">2017 - ES2017</div>
+                <div class="timeline-title">Async / Await</div>
+                <div class="timeline-desc">Introduced async/await for readable asynchronous code and Object.entries/values().</div>
+              </div>
+              <div class="timeline-item">
+                <div class="timeline-year">2018 - ES2018</div>
+                <div class="timeline-title">Rest / Spread for Objects & Promise.finally</div>
+                <div class="timeline-desc">Object rest/spread properties and asynchronous iteration with for-await-of.</div>
+              </div>
+              <div class="timeline-item">
+                <div class="timeline-year">2019 - ES2019</div>
+                <div class="timeline-title">Array.flat & Object.fromEntries</div>
+                <div class="timeline-desc">Added Array.prototype.flat(), flatMap(), and String.prototype.trimStart()/trimEnd().</div>
+              </div>
+              <div class="timeline-item">
+                <div class="timeline-year">2020 - ES2020</div>
+                <div class="timeline-title">BigInt & Nullish Coalescing</div>
+                <div class="timeline-desc">Added BigInt primitive, Optional Chaining (?.), and Nullish Coalescing (??).</div>
+              </div>
+              <div class="timeline-item">
+                <div class="timeline-year">2021 - ES2021</div>
+                <div class="timeline-title">String replaceAll & Logical Assignment</div>
+                <div class="timeline-desc">Added replaceAll(), Promise.any(), and logical assignment operators (&&=, ||=, ??=).</div>
+              </div>
+              <div class="timeline-item">
+                <div class="timeline-year">2022 - ES2022</div>
+                <div class="timeline-title">Top-level Await & Array.at()</div>
+                <div class="timeline-desc">Top-level await in modules, private class fields (#), and indexable .at() method.</div>
+              </div>
+              <div class="timeline-item">
+                <div class="timeline-year">2023 - ES2023</div>
+                <div class="timeline-title">Array Immutability & findLast</div>
+                <div class="timeline-desc">Added toSorted(), toReversed(), toSpliced(), and Array findLast() / findLastIndex().</div>
+              </div>
+              <div class="timeline-item">
+                <div class="timeline-year">2024 - ES2024</div>
+                <div class="timeline-title">Object.groupBy & Promise.withResolvers</div>
+                <div class="timeline-desc">Native collection grouping via Object.groupBy() and Map.groupBy().</div>
+              </div>
+              <div class="timeline-item">
+                <div class="timeline-year">2025 - ES2025</div>
+                <div class="timeline-title">New Set Methods & Iterator Helpers</div>
+                <div class="timeline-desc">Mathematical Set methods (union, intersection, difference) and standard iterator chaining.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SUB-SECTION 3: Data Types & Conversion -->
+      <div id="concept-datatypes" class="concept-section">
+        <!-- Type Checker -->
+        <div class="lab-card">
+          <div class="lab-card-header">
+            <h3>🏷️ Data Types & Live Type Checker</h3>
+            <p>Primitives (string, number, boolean, undefined, null, bigint, symbol) vs Reference types (object, array, function).</p>
+          </div>
+          <div class="lab-card-body">
+            <div class="interactive-box">
+              <div class="form-group">
+                <label>Enter value to detect type:</label>
+                <input type="text" id="type-input" class="form-control" value="42" placeholder="e.g. 123, 'hello', true, [1,2], {a:1}">
+              </div>
+              <button class="btn btn-primary" onclick="ConceptsLab.runTypeChecker()">▶ Run Type Checker</button>
+              <div class="output-label">Detected Type Result:</div>
+              <pre id="out-type-checker" class="output-box">// Click to test type</pre>
+            </div>
+            <div class="code-box">
+              <div class="code-header">Data Types Reference</div>
+              <code>
+// 7 Primitive Types:<br>
+typeof "text"    // "string"<br>
+typeof 123       // "number"<br>
+typeof true      // "boolean"<br>
+typeof undefined // "undefined"<br>
+typeof null      // "object" (historic bug)<br>
+typeof 10n       // "bigint"<br>
+typeof Symbol()  // "symbol"<br><br>
+// Reference Types:<br>
+typeof {}        // "object"<br>
+typeof []        // "object" (Array)<br>
+typeof function(){}// "function"
+              </code>
+            </div>
+          </div>
+        </div>
+
+        <!-- Type Conversion Tool -->
+        <div class="lab-card">
+          <div class="lab-card-header">
+            <h3>🔄 Type Conversion Tool (Explicit & Implicit)</h3>
+            <p>Demonstrates automatic coercion vs explicit conversion using Number(), String(), Boolean(), and parseInt().</p>
+          </div>
+          <div class="lab-card-body">
+            <div class="interactive-box">
+              <div class="form-group">
+                <label>Input Value:</label>
+                <input type="text" id="conversion-input" class="form-control" value="25" placeholder="e.g. 25, '100', true">
+              </div>
+              <div class="form-group">
+                <label>Conversion Target / Method:</label>
+                <select id="conversion-target" class="form-control">
+                  <option value="Number">Explicit Number()</option>
+                  <option value="parseInt">Explicit parseInt()</option>
+                  <option value="parseFloat">Explicit parseFloat()</option>
+                  <option value="String">Explicit String()</option>
+                  <option value="Boolean">Explicit Boolean()</option>
+                  <option value="implicit_plus">Implicit: val + 10 (Addition/Concat)</option>
+                  <option value="implicit_minus">Implicit: val - 2 (Numeric Coercion)</option>
+                  <option value="implicit_multiply">Implicit: val * 3 (Numeric Coercion)</option>
+                </select>
+              </div>
+              <button class="btn btn-primary" onclick="ConceptsLab.runTypeConversion()">▶ Perform Conversion</button>
+              <div class="output-label">Conversion Result:</div>
+              <pre id="out-conversion" class="output-box">// Converted output</pre>
+            </div>
+            <div class="code-box">
+              <div class="code-header">Implicit Coercion Rules</div>
+              <code>
+"5" + 2  // "52" (String concatenation)<br>
+"5" - 2  // 3    (Coerced to number)<br>
+"5" * 2  // 10   (Coerced to number)<br><br>
+// Explicit Casting:<br>
+Number("123")   // 123<br>
+String(123)     // "123"<br>
+Boolean(0)      // false<br>
+Boolean("hi")   // true
+              </code>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SUB-SECTION 4: Operators -->
+      <div id="concept-operators" class="concept-section">
+        <div class="lab-card">
+          <div class="lab-card-header">
+            <h3>➕ Interactive Operator Calculator</h3>
+            <p>Arithmetic, Relational (loose <code>==</code> vs strict <code>===</code>), Logical, and Assignment operators.</p>
+          </div>
+          <div class="lab-card-body">
+            <div class="interactive-box">
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Operand A:</label>
+                  <input type="text" id="op-a" class="form-control" value="10">
+                </div>
+                <div class="form-group">
+                  <label>Operator:</label>
+                  <select id="op-select" class="form-control">
+                    <optgroup label="Arithmetic">
+                      <option value="+">Add (+)</option>
+                      <option value="-">Subtract (-)</option>
+                      <option value="*">Multiply (*)</option>
+                      <option value="/">Divide (/)</option>
+                      <option value="%">Modulus (%)</option>
+                      <option value="**">Exponentiation (**)</option>
+                    </optgroup>
+                    <optgroup label="Relational">
+                      <option value=">">Greater than (&gt;)</option>
+                      <option value="<">Less than (&lt;)</option>
+                      <option value=">=">Greater or Equal (&gt;=)</option>
+                      <option value="<=">Less or Equal (&lt;=)</option>
+                      <option value="==">Loose Equal (==)</option>
+                      <option value="===">Strict Equal (===)</option>
+                      <option value="!=">Loose Not Equal (!=)</option>
+                      <option value="!==">Strict Not Equal (!==)</option>
+                    </optgroup>
+                    <optgroup label="Logical">
+                      <option value="&&">Logical AND (&amp;&amp;)</option>
+                      <option value="||">Logical OR (||)</option>
+                      <option value="!">Logical NOT (!A)</option>
+                    </optgroup>
+                    <optgroup label="Assignment">
+                      <option value="+=">A += B</option>
+                      <option value="-=">A -= B</option>
+                      <option value="*=">A *= B</option>
+                      <option value="/=">A /= B</option>
+                    </optgroup>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>Operand B:</label>
+                  <input type="text" id="op-b" class="form-control" value="5">
+                </div>
+              </div>
+              <button class="btn btn-primary" onclick="ConceptsLab.runOperatorCalc()">▶ Compute Operator Result</button>
+              <div class="output-label">Evaluation:</div>
+              <pre id="out-operator" class="output-box">// Select and calculate</pre>
+            </div>
+            <div class="code-box">
+              <div class="code-header">Key viva concept: == vs ===</div>
+              <code>
+5 == "5"   // true (loose equality coerces string to number)<br>
+5 === "5"  // false (strict equality checks value AND type)<br><br>
+Logical AND (&amp;&amp;): Returns true only if both operands are truthy.<br>
+Logical OR (||): Returns true if at least one operand is truthy.
+              </code>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SUB-SECTION 5: Control, Loops & Errors -->
+      <div id="concept-control" class="concept-section">
+        <!-- Grade Calculator (if / else if / else) -->
+        <div class="lab-card">
+          <div class="lab-card-header">
+            <h3>🔀 Conditionals: Grade Calculator (if...else if...else)</h3>
+            <p>Evaluates academic marks into letter grades using sequential conditional branches.</p>
+          </div>
+          <div class="lab-card-body">
+            <div class="interactive-box">
+              <div class="form-group">
+                <label>Enter Student Marks (0 - 100):</label>
+                <input type="number" id="marks-input" class="form-control" value="85" min="0" max="100">
+              </div>
+              <button class="btn btn-primary" onclick="ConceptsLab.runGradeCalculator()">▶ Calculate Grade</button>
+              <div class="output-label">Evaluation Output:</div>
+              <pre id="out-grade" class="output-box">// Grade result</pre>
+            </div>
+            <div class="code-box">
+              <div class="code-header">Code Logic</div>
+              <code>
+if (marks >= 90) grade = "A+";<br>
+else if (marks >= 80) grade = "A";<br>
+else if (marks >= 70) grade = "B";<br>
+else if (marks >= 60) grade = "C";<br>
+else if (marks >= 40) grade = "D";<br>
+else grade = "F";
+              </code>
+            </div>
+          </div>
+        </div>
+
+        <!-- Switch Case Day Selector -->
+        <div class="lab-card">
+          <div class="lab-card-header">
+            <h3>🎛️ Switch Statement: Day Selector</h3>
+            <p>Matches an expression against discrete case clauses with break jumps.</p>
+          </div>
+          <div class="lab-card-body">
+            <div class="interactive-box">
+              <div class="form-group">
+                <label>Select Day Number (1 - 7):</label>
+                <select id="day-select" class="form-control">
+                  <option value="1">1 - Monday</option>
+                  <option value="2">2 - Tuesday</option>
+                  <option value="3">3 - Wednesday</option>
+                  <option value="4">4 - Thursday</option>
+                  <option value="5">5 - Friday</option>
+                  <option value="6">6 - Saturday</option>
+                  <option value="7">7 - Sunday</option>
+                </select>
+              </div>
+              <button class="btn btn-primary" onclick="ConceptsLab.runDaySelector()">▶ Run Switch Statement</button>
+              <div class="output-label">Switch Output:</div>
+              <pre id="out-day" class="output-box">// Switch result</pre>
+            </div>
+            <div class="code-box">
+              <div class="code-header">Switch Syntax</div>
+              <code>
+switch (dayNum) {<br>
+&nbsp;&nbsp;case 1: dayName = "Monday"; break;<br>
+&nbsp;&nbsp;case 2: dayName = "Tuesday"; break;<br>
+&nbsp;&nbsp;...<br>
+&nbsp;&nbsp;default: dayName = "Invalid";<br>
+}
+              </code>
+            </div>
+          </div>
+        </div>
+
+        <!-- Loops Lab -->
+        <div class="lab-card">
+          <div class="lab-card-header">
+            <h3>🔁 Loops: for, while, do...while, for...of, for...in</h3>
+            <p>Demonstrates iteration patterns over numbers and arrays like <code>["Aman", "Riya", "Rahul"]</code>.</p>
+          </div>
+          <div class="lab-card-body">
+            <div class="interactive-box">
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Loop Type:</label>
+                  <select id="loop-select" class="form-control">
+                    <option value="for">for (Standard counter loop)</option>
+                    <option value="while">while (Entry controlled)</option>
+                    <option value="dowhile">do...while (Exit controlled, runs >= 1)</option>
+                    <option value="forof">for...of (Iterates Array values)</option>
+                    <option value="forin">for...in (Iterates Object keys)</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>Iteration Count (for/while):</label>
+                  <input type="number" id="loop-count" class="form-control" value="4" min="1" max="10">
+                </div>
+              </div>
+              <button class="btn btn-primary" onclick="ConceptsLab.runLoopDemo()">▶ Execute Loop</button>
+              <div class="output-label">Loop Iterations:</div>
+              <pre id="out-loop" class="output-box">// Loop output</pre>
+            </div>
+            <div class="code-box">
+              <div class="code-header">Loop Comparison</div>
+              <code>
+// for...of iterates over array items:<br>
+for (const item of ["Aman", "Riya", "Rahul"]) {<br>
+&nbsp;&nbsp;console.log(item);<br>
+}<br><br>
+// do...while always executes body at least once<br>
+do { i++; } while (i &lt; count);
+              </code>
+            </div>
+          </div>
+        </div>
+
+        <!-- Jump Statements -->
+        <div class="lab-card">
+          <div class="lab-card-header">
+            <h3>🦘 Jump Statements: break, continue & return</h3>
+            <p>Alter program flow: break terminates a loop, continue skips iteration, return exits a function.</p>
+          </div>
+          <div class="lab-card-body">
+            <div class="interactive-box">
+              <div class="form-group">
+                <label>Select Jump Statement:</label>
+                <select id="jump-select" class="form-control">
+                  <option value="break">break (Terminates loop when i === 3)</option>
+                  <option value="continue">continue (Skips iteration when i === 3)</option>
+                  <option value="return">return (Exits function with a value)</option>
+                </select>
+              </div>
+              <button class="btn btn-primary" onclick="ConceptsLab.runJumpDemo()">▶ Test Jump Statement</button>
+              <div class="output-label">Result:</div>
+              <pre id="out-jump" class="output-box">// Jump result</pre>
+            </div>
+            <div class="code-box">
+              <div class="code-header">Jump Syntax</div>
+              <code>
+if (i === 3) break;    // exits loop completely<br>
+if (i === 3) continue; // skips remaining lines, starts next iteration<br>
+return result;         // returns result to caller
+              </code>
+            </div>
+          </div>
+        </div>
+
+        <!-- Error Handling -->
+        <div class="lab-card">
+          <div class="lab-card-header">
+            <h3>🛡️ Error Handling: try, catch, finally & throw</h3>
+            <p>Safe exception handling. Input age to validate; displays errors gracefully without exposing stack traces.</p>
+          </div>
+          <div class="lab-card-body">
+            <div class="interactive-box">
+              <div class="form-group">
+                <label>Enter Student Age (Try: -5, 12, 21, or 'abc'):</label>
+                <input type="text" id="error-age-input" class="form-control" value="15" placeholder="Enter age">
+              </div>
+              <button class="btn btn-primary" onclick="ConceptsLab.runErrorDemo()">▶ Execute try / catch / throw</button>
+              <div class="output-label">Execution Trace:</div>
+              <pre id="out-error" class="output-box">// Try/catch trace</pre>
+            </div>
+            <div class="code-box">
+              <div class="code-header">Exception Pattern</div>
+              <code>
+try {<br>
+&nbsp;&nbsp;if (age &lt; 18) throw new Error("Age must be >= 18");<br>
+} catch (err) {<br>
+&nbsp;&nbsp;console.error(err.message); // Safe user message<br>
+} finally {<br>
+&nbsp;&nbsp;cleanup(); // Always runs<br>
+}
+              </code>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SUB-SECTION 6: Numbers, Math & Date -->
+      <div id="concept-numbers-date" class="concept-section">
+        <!-- Numbers Lab -->
+        <div class="lab-card">
+          <div class="lab-card-header">
+            <h3>🔢 Numbers Lab (Literals & Methods)</h3>
+            <p>Number literals (decimal, float, hex, exponential) and methods (toFixed, toPrecision, toString).</p>
+          </div>
+          <div class="lab-card-body">
+            <div class="interactive-box">
+              <div class="form-group">
+                <label>Input Float Number:</label>
+                <input type="number" id="num-input" class="form-control" value="123.45678" step="any">
+              </div>
+              <button class="btn btn-primary" onclick="ConceptsLab.runNumberMethodsDemo()">▶ Run Number Methods</button>
+              <div class="output-label">Methods Output:</div>
+              <pre id="out-numbers" class="output-box">// Number methods</pre>
+            </div>
+            <div class="code-box">
+              <div class="code-header">Literals & Methods</div>
+              <code>
+10        // Integer literal<br>
+10.5      // Floating point literal<br>
+0xFF      // Hexadecimal literal (255)<br>
+2e3       // Exponential literal (2000)<br><br>
+num.toFixed(2);     // "123.46"<br>
+num.toPrecision(4); // "123.5"
+              </code>
+            </div>
+          </div>
+        </div>
+
+        <!-- Math Object -->
+        <div class="lab-card">
+          <div class="lab-card-header">
+            <h3>🧮 Math Object & Random Number Generator</h3>
+            <p>Standard mathematical functions: round, floor, ceil, sqrt, pow, min, max, and random.</p>
+          </div>
+          <div class="lab-card-body">
+            <div class="interactive-box">
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Sample Number:</label>
+                  <input type="number" id="math-sample" class="form-control" value="24.6" step="0.1">
+                </div>
+                <div class="form-group">
+                  <label>Min Random:</label>
+                  <input type="number" id="math-min" class="form-control" value="1">
+                </div>
+                <div class="form-group">
+                  <label>Max Random:</label>
+                  <input type="number" id="math-max" class="form-control" value="100">
+                </div>
+              </div>
+              <button class="btn btn-primary" onclick="ConceptsLab.runMathDemo()">▶ Compute Math & Generate Random</button>
+              <div class="output-label">Math Output:</div>
+              <pre id="out-math" class="output-box">// Math output</pre>
+            </div>
+            <div class="code-box">
+              <div class="code-header">Random Integer Formula</div>
+              <code>
+// Generates integer between min and max (inclusive):<br>
+Math.floor(Math.random() * (max - min + 1)) + min;<br><br>
+Math.round(24.6) -> 25<br>
+Math.floor(24.6) -> 24<br>
+Math.ceil(24.6)  -> 25<br>
+Math.sqrt(64)    -> 8
+              </code>
+            </div>
+          </div>
+        </div>
+
+        <!-- Date Object & Age Calculator -->
+        <div class="lab-card">
+          <div class="lab-card-header">
+            <h3>📅 Date Object & Age Calculator</h3>
+            <p>Accessing day, month, year, time components and calculating elapsed years.</p>
+          </div>
+          <div class="lab-card-body">
+            <div class="interactive-box">
+              <div class="output-label">Current System Date Components:</div>
+              <pre id="out-date-now" class="output-box" style="margin-bottom: 0.75rem;">// Loading system date...</pre>
+              <div class="form-group">
+                <label>Select Date of Birth for Age Calculation:</label>
+                <input type="date" id="dob-input" class="form-control" value="2004-05-15">
+              </div>
+              <button class="btn btn-primary" onclick="ConceptsLab.runAgeCalculator()">▶ Calculate Age</button>
+              <div class="output-label">Age Output:</div>
+              <pre id="out-age" class="output-box">// Age will appear here</pre>
+            </div>
+            <div class="code-box">
+              <div class="code-header">Date Methods</div>
+              <code>
+const d = new Date();<br>
+d.getDate();        // Day of month (1-31)<br>
+d.getMonth();       // Month index (0-11)<br>
+d.getFullYear();    // 4-digit Year (e.g. 2026)<br>
+d.getDay();         // Day of week (0-6)<br>
+d.getHours();       // Hours (0-23)<br>
+d.getMinutes();     // Minutes (0-59)
+              </code>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SUB-SECTION 7: Strings & Arrays -->
+      <div id="concept-strings-arrays" class="concept-section">
+        <!-- String Lab -->
+        <div class="lab-card">
+          <div class="lab-card-header">
+            <h3>🔤 String Lab (Methods & Manipulations)</h3>
+            <p>Interactive string operations: slice, substring, indexOf, includes, replace, trim, split, charAt.</p>
+          </div>
+          <div class="lab-card-body">
+            <div class="interactive-box">
+              <div class="form-group">
+                <label>Target String:</label>
+                <input type="text" id="str-input" class="form-control" value="  JavaScript Lab Management  ">
+              </div>
+              <div class="form-group">
+                <label>Select String Operation:</label>
+                <select id="str-op-select" class="form-control">
+                  <option value="length">.length (Character count)</option>
+                  <option value="toUpperCase">.toUpperCase()</option>
+                  <option value="toLowerCase">.toLowerCase()</option>
+                  <option value="slice">.slice(2, 12)</option>
+                  <option value="substring">.substring(2, 12)</option>
+                  <option value="indexOf">.indexOf("Lab")</option>
+                  <option value="includes">.includes("Script")</option>
+                  <option value="replace">.replace("Lab", "Laboratory")</option>
+                  <option value="trim">.trim() (Strips whitespace)</option>
+                  <option value="split">.split(" ") (Splits to array)</option>
+                  <option value="charAt">.charAt(2)</option>
+                </select>
+              </div>
+              <button class="btn btn-primary" onclick="ConceptsLab.runStringDemo()">▶ Execute String Method</button>
+              <div class="output-label">String Output:</div>
+              <pre id="out-string" class="output-box">// String result</pre>
+            </div>
+            <div class="code-box">
+              <div class="code-header">String Immutability</div>
+              <code>
+Strings are immutable in JavaScript.<br>
+Methods like .toUpperCase() or .replace() do NOT modify the original string; they return a NEW string.<br><br>
+str.slice(start, end) supports negative indices.<br>
+str.indexOf(sub) returns -1 if not found.
+              </code>
+            </div>
+          </div>
+        </div>
+
+        <!-- Array Lab -->
+        <div class="lab-card">
+          <div class="lab-card-header">
+            <h3>📚 Interactive Array Editor (Mutator & Iterator Methods)</h3>
+            <p>Demonstrates: push, pop, shift, unshift, slice, splice, map, filter, find, and reduce on numbers array.</p>
+          </div>
+          <div class="lab-card-body">
+            <div class="interactive-box">
+              <div class="form-group">
+                <label>Element Value (for push / unshift):</label>
+                <input type="number" id="arr-val-input" class="form-control" value="10">
+              </div>
+              <div style="display: flex; gap: 0.4rem; flex-wrap: wrap;">
+                <button class="btn btn-secondary btn-sm" onclick="ConceptsLab.runArrayOperation('push')">push()</button>
+                <button class="btn btn-secondary btn-sm" onclick="ConceptsLab.runArrayOperation('pop')">pop()</button>
+                <button class="btn btn-secondary btn-sm" onclick="ConceptsLab.runArrayOperation('shift')">shift()</button>
+                <button class="btn btn-secondary btn-sm" onclick="ConceptsLab.runArrayOperation('unshift')">unshift()</button>
+                <button class="btn btn-secondary btn-sm" onclick="ConceptsLab.runArrayOperation('map')">map(x*2)</button>
+                <button class="btn btn-secondary btn-sm" onclick="ConceptsLab.runArrayOperation('filter')">filter(even)</button>
+                <button class="btn btn-secondary btn-sm" onclick="ConceptsLab.runArrayOperation('reduce')">reduce(sum)</button>
+                <button class="btn btn-secondary btn-sm" onclick="ConceptsLab.runArrayOperation('find')">find(x>3)</button>
+                <button class="btn btn-secondary btn-sm" onclick="ConceptsLab.runArrayOperation('slice')">slice(1,3)</button>
+                <button class="btn btn-secondary btn-sm" onclick="ConceptsLab.runArrayOperation('splice')">splice(1,1,99)</button>
+                <button class="btn btn-secondary btn-sm" onclick="ConceptsLab.runArrayOperation('join')">join(" - ")</button>
+                <button class="btn btn-danger btn-sm" onclick="ConceptsLab.runArrayOperation('reset')">Reset [1,2,3,4,5]</button>
+              </div>
+              <div class="output-label" style="margin-top: 0.75rem;">Live Array State & Output:</div>
+              <pre id="out-array" class="output-box">Current Array State: [1, 2, 3, 4, 5]
+Array Length:        5
+Operation Result:    Initialized.</pre>
+            </div>
+            <div class="code-box">
+              <div class="code-header">Key ES5/ES6 Array Higher-Order Functions</div>
+              <code>
+// map: transforms each item<br>
+numbers.map(x => x * 2);<br><br>
+// filter: keeps items that match predicate<br>
+numbers.filter(x => x % 2 === 0);<br><br>
+// reduce: aggregates array into single accumulator<br>
+numbers.reduce((acc, curr) => acc + curr, 0);
+              </code>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SUB-SECTION 8: Functions, Closures & Regex -->
+      <div id="concept-functions" class="concept-section">
+        <!-- Functions Lab -->
+        <div class="lab-card">
+          <div class="lab-card-header">
+            <h3>⚙️ Functions: Declarations, Expressions & Arrow Functions</h3>
+            <p>Parameters vs Arguments, return values, and syntactic variations in ES6+.</p>
+          </div>
+          <div class="lab-card-body">
+            <div class="interactive-box">
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Argument A:</label>
+                  <input type="number" id="fn-a" class="form-control" value="12">
+                </div>
+                <div class="form-group">
+                  <label>Argument B:</label>
+                  <input type="number" id="fn-b" class="form-control" value="8">
+                </div>
+                <div class="form-group">
+                  <label>Syntax Type:</label>
+                  <select id="fn-type-select" class="form-control">
+                    <option value="declaration">Function Declaration</option>
+                    <option value="expression">Function Expression</option>
+                    <option value="arrow">Arrow Function (ES6)</option>
+                  </select>
+                </div>
+              </div>
+              <button class="btn btn-primary" onclick="ConceptsLab.runFunctionDemo()">▶ Execute Function</button>
+              <div class="output-label">Function Result:</div>
+              <pre id="out-function" class="output-box">// Function output</pre>
+            </div>
+            <div class="code-box">
+              <div class="code-header">Parameters vs Arguments</div>
+              <code>
+// 'a' & 'b' are PARAMETERS (placeholders)<br>
+function add(a, b) {<br>
+&nbsp;&nbsp;return a + b;<br>
+}<br><br>
+// 12 & 8 are ARGUMENTS (concrete values passed)<br>
+add(12, 8); // returns 20
+              </code>
+            </div>
+          </div>
+        </div>
+
+        <!-- Closures Counter Lab -->
+        <div class="lab-card">
+          <div class="lab-card-header">
+            <h3>🔒 Closures: Stateful Private Counter</h3>
+            <p>An inner function maintains lexical scope access to variables declared in its enclosing function even after the outer function has returned.</p>
+          </div>
+          <div class="lab-card-body">
+            <div class="interactive-box">
+              <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                <button class="btn btn-primary" onclick="ConceptsLab.runClosureAction('increment')">➕ Increment Counter</button>
+                <button class="btn btn-secondary" onclick="ConceptsLab.runClosureAction('decrement')">➖ Decrement Counter</button>
+                <button class="btn btn-danger" onclick="ConceptsLab.runClosureAction('reset')">🔄 Reset Counter</button>
+              </div>
+              <div class="output-label" style="margin-top: 0.75rem;">Closure Memory State:</div>
+              <pre id="out-closure" class="output-box">Counter Value: 0
+
+Click Increment Counter to execute the inner function closure.</pre>
+            </div>
+            <div class="code-box">
+              <div class="code-header">Closure Viva Definition & Code</div>
+              <code>
+function createCounter() {<br>
+&nbsp;&nbsp;let count = 0; // Private enclosed state<br>
+&nbsp;&nbsp;return function() {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;count++;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;return count;<br>
+&nbsp;&nbsp;};<br>
+}<br>
+const counter = createCounter();<br>
+counter(); // 1<br>
+counter(); // 2
+              </code>
+            </div>
+          </div>
+        </div>
+
+        <!-- Regular Expressions Lab -->
+        <div class="lab-card">
+          <div class="lab-card-header">
+            <h3>🔍 Regular Expressions Lab (Validation Patterns)</h3>
+            <p>Demonstrates literal regex <code>/pattern/</code>, <code>RegExp</code> object, <code>test()</code>, and practical validation.</p>
+          </div>
+          <div class="lab-card-body">
+            <div class="interactive-box">
+              <div class="form-group">
+                <label>Choose Practical Validator:</label>
+                <select id="regex-preset" class="form-control">
+                  <option value="email">Email Validator</option>
+                  <option value="mobile">Mobile Number Validator (10-digits)</option>
+                  <option value="password">Strong Password (8+ chars, upper, lower, digit, symbol)</option>
+                  <option value="username">Username Validator (alphanumeric, 3-16 chars)</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Test Input String:</label>
+                <input type="text" id="regex-input" class="form-control" value="student@example.edu" placeholder="Enter string to test">
+              </div>
+              <button class="btn btn-primary" onclick="ConceptsLab.runRegexValidator()">▶ Test Regular Expression</button>
+              <div class="output-label">Regex Match Result:</div>
+              <pre id="out-regex" class="output-box">// Regex match result</pre>
+            </div>
+            <div class="code-box">
+              <div class="code-header">Regex Methods</div>
+              <code>
+// test(): returns true/false<br>
+/^[6-9]\d{9}$/.test("9876543210"); // true<br><br>
+// exec(): returns matched details or null<br>
+/([a-z]+)/i.exec("hello");<br><br>
+// String methods with RegExp:<br>
+str.match(pattern);<br>
+str.replace(pattern, "replacement");<br>
+str.search(pattern);
+              </code>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- 5. ABOUT TAB                               -->
+    <!-- ========================================== -->
+    <section id="tab-about" class="tab-pane">
+      <div class="section-header">
+        <div>
+          <h2>About Project & Viva Examination Guide</h2>
+          <p>Designed for academic practical presentation, evaluation, and viva voce.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3 class="card-title">Project Summary</h3>
+        <p style="margin-bottom: 0.85rem;">
+          The <strong>JS Lab Management System</strong> is an intentional, lightweight, full-stack educational project built to fulfill all practical requirements of a college JavaScript laboratory curriculum.
+        </p>
+        <p style="margin-bottom: 0.85rem;">
+          It combines practical resource management (Students and Lab Experiments backed by a MySQL database) with an interactive <strong>JavaScript Concepts Lab</strong> where examiners and students can run and inspect the execution of fundamental and advanced JavaScript language concepts in real time.
+        </p>
+      </div>
+
+      <div class="content-split">
+        <div class="card">
+          <h3 class="card-title">Technology Stack</h3>
+          <ul style="padding-left: 1.25rem; line-height: 1.8;">
+            <li><strong>Frontend:</strong> HTML5 Semantic markup, Modern CSS3 Flexbox/Grid, Vanilla JavaScript (ES6+).</li>
+            <li><strong>Backend:</strong> Node.js, Express.js REST APIs.</li>
+            <li><strong>Database:</strong> MySQL Server with <code>mysql2/promise</code> connection pool and parameterized SQL.</li>
+            <li><strong>Architecture:</strong> Single-Page Dashboard with fetch() asynchronous client-server communication.</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h3 class="card-title">Viva Voce Key Talking Points</h3>
+          <ol style="padding-left: 1.25rem; line-height: 1.8;">
+            <li><strong>Why Vanilla JS?</strong> Eliminates unnecessary framework overhead, allowing direct demonstration of DOM APIs, asynchronous <code>fetch()</code>, and ES6+ features.</li>
+            <li><strong>SQL Injection Prevention:</strong> Express endpoints use parameterized queries (<code>?</code> placeholders) via <code>mysql2</code> to prevent malicious SQL execution.</li>
+            <li><strong>Asynchronous Flow:</strong> Form submit triggers JavaScript event listener &rarr; sends non-blocking <code>fetch()</code> request &rarr; Express handles route and queries MySQL &rarr; JSON response dynamically updates UI without whole page reload.</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Application Footer -->
+  <footer>
+    <p>JS Lab Management System &bull; B.Tech JavaScript Laboratory Course Project &bull; Built with HTML5, CSS3, Vanilla JS, Express & MySQL</p>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/validation.js"></script>
+  <script src="js/concepts.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
