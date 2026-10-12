@@ -1253,7 +1253,7 @@ str.search(pattern);
           <ul style="padding-left: 1.25rem; line-height: 1.8;">
             <li><strong>Frontend:</strong> HTML5 Semantic markup, Modern CSS3 Flexbox/Grid, Vanilla JavaScript (ES6+).</li>
             <li><strong>Backend:</strong> Node.js, Express.js REST APIs.</li>
-            <li><strong>Database:</strong> MySQL Server with <code>mysql2/promise</code> connection pool and parameterized SQL.</li>
+            <li><strong>Database:</strong> MongoDb (NoSQL) or MySQL (Relational) for persistent storage of students and experiments.</li>
             <li><strong>Architecture:</strong> Single-Page Dashboard with fetch() asynchronous client-server communication.</li>
           </ul>
         </div>
@@ -1262,7 +1262,7 @@ str.search(pattern);
           <h3 class="card-title">Viva Voce Key Talking Points</h3>
           <ol style="padding-left: 1.25rem; line-height: 1.8;">
             <li><strong>Why Vanilla JS?</strong> Eliminates unnecessary framework overhead, allowing direct demonstration of DOM APIs, asynchronous <code>fetch()</code>, and ES6+ features.</li>
-            <li><strong>SQL Injection Prevention:</strong> Express endpoints use parameterized queries (<code>?</code> placeholders) via <code>mysql2</code> to prevent malicious SQL execution.</li>
+            <li><strong>MongoDb Connections </strong>: Uses <code>mongoose.connect()</code> with proper error handling and connection pooling for efficient database access.</li>
             <li><strong>Asynchronous Flow:</strong> Form submit triggers JavaScript event listener &rarr; sends non-blocking <code>fetch()</code> request &rarr; Express handles route and queries MySQL &rarr; JSON response dynamically updates UI without whole page reload.</li>
           </ol>
         </div>
